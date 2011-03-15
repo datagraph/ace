@@ -28,6 +28,7 @@
           <option value="svg">SVG Document</option>
           <option value="textile">Textile Document</option>
           <option value="plain">Text Document</option>
+          <option value="sparql">SPARQL Document</option>
         </select>
       </td>
       <td align="right">
@@ -100,6 +101,7 @@
           <option value="csharp">C-Sharp</option>
           <option value="svg">SVG</option>
           <option value="textile">Textile</option>
+          <option value="sparql">SPARQL</option>
         </select>
       </td>
       <td align="right">
@@ -442,6 +444,31 @@ p(one two three#my_id). ..classes + id
 bg. Blockquote!
     This is a two-list blockquote..!
 
+</script>
+<script type="text/editor" id="sparqltext"># A sample SPARQL query
+PREFIX  data:  <http://example.org/foaf/>
+PREFIX  foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX  rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?mbox ?nick ?ppd
+FROM NAMED <http://example.org/foaf/aliceFoaf>
+FROM NAMED <http://example.org/foaf/bobFoaf>
+WHERE
+{
+  GRAPH data:aliceFoaf
+  {
+    ?alice foaf:mbox <mailto:alice@work.example> ;
+           foaf:knows ?whom .
+    ?whom  foaf:mbox ?mbox ;
+           rdfs:seeAlso ?ppd .
+    ?ppd  a foaf:PersonalProfileDocument .
+  } .
+  GRAPH ?ppd
+  {
+      ?w foaf:mbox ?mbox ;
+         foaf:nick ?nick
+  }
+}
 </script>
 
   <input id="cockpitInput" type="text"/>

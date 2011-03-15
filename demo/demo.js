@@ -62,6 +62,7 @@ exports.launch = function(env) {
     var SvgMode = require("ace/mode/svg").Mode;
     var TextileMode = require("ace/mode/textile").Mode;
     var TextMode = require("ace/mode/text").Mode;
+    var SparqlMode = require("ace/mode/sparql").Mode;
     var UndoManager = require("ace/undomanager").UndoManager;
 
     var vim = require("ace/keyboard/keybinding/vim").Vim;
@@ -144,6 +145,10 @@ exports.launch = function(env) {
     docs.textile.setMode(new TextileMode());
     docs.textile.setUndoManager(new UndoManager());
 
+    docs.sparql = new EditSession(document.getElementById("sparqltext").innerHTML);
+    docs.sparql.setMode(new SparqlMode());
+    docs.sparql.setUndoManager(new UndoManager());
+
     var container = document.getElementById("editor");
     env.editor = new Editor(new Renderer(container, theme));
 
@@ -162,7 +167,8 @@ exports.launch = function(env) {
         c_cpp: new CCPPMode(),
         coffee: new CoffeeMode(),
         perl: new PerlMode(),
-				csharp: new CSharpMode()
+				csharp: new CSharpMode(),
+        sparql: new SparqlMode()
     };
 
     function getMode() {
@@ -218,6 +224,9 @@ exports.launch = function(env) {
         }
         else if (mode instanceof TextileMode) {
             modeEl.value = "textile";
+        }
+        else if (mode instanceof SparqlMode) {
+            modeEl.value = "sparql";
         }
         else {
             modeEl.value = "text";
